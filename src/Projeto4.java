@@ -2,94 +2,67 @@ import java.util.ArrayList;
 
 public class Projeto4 {
 
-    private static Integer contador = 0;
-    private static Integer posicao = 0;
-    private static ArrayList<String> Vetor = new ArrayList();
-
-    public Integer getContador() {
-        return contador;
-    }
-
-    public void setContador(Integer contador) {
-        this.contador = contador;
-    }
-
-    public Integer getPosicao() {
-        return posicao;
-    }
-
-    public void setPosicao(Integer posicao) {
-        this.posicao = posicao;
-    }
-
-    public ArrayList<String> getVetor() {
-        return Vetor;
-    }
-
-    public void setVetor(ArrayList<String> vetor) {
-        Vetor = vetor;
-    }
-
-    public static void ContarRepetiçõesRecursivas(String busca){
-
-        while (posicao < (Vetor.size() -1) ) {
-            if( Vetor.get(posicao) == busca) {
-                contador++;
-            }
-            posicao++;
-        }
-
-    }
-
-    public static Integer ContarRepetiçõesInterativas(String busca, ArrayList<String> V){
-
-        Integer contadorInterativo = 0;
-
-        for (String v : V ) {
-             if (busca == v){
-                 contadorInterativo++;
-             }
-        }
-        return contadorInterativo;
-    }
+    // Variaveis de controle de recursividade
+    public static int contador;
+    public static int posicao;
 
     public static void main(String[] args) {
 
-        // Verificações recursivas
-
+        ArrayList<String> Vetor = new ArrayList();
         Vetor.add("A");
         Vetor.add("B");
         Vetor.add("B");
         Vetor.add("B");
         Vetor.add("B");
 
+        // Verificações recursivas
         System.out.println("Verifcações recursivas");
-
-        System.out.println("Buscar recursiva por A");
-        ContarRepetiçõesRecursivas("A");
+        ContarRepetiçõesRecursivas("A", Vetor);
         System.out.println("Repitções de A " + contador);
-        // Zerando marcador de posição do vertor
-        posicao = 0;
 
-        System.out.println("Busca recursiva por B");
-        ContarRepetiçõesRecursivas("B");
+        // Zerando contadores
+        contador=0;posicao=0;
+
+        ContarRepetiçõesRecursivas("B", Vetor);
         System.out.println("Repitções de B " + contador);
-        // Zerando marcador de posição do vertor
-        posicao = 0;
 
         // Verificações interativas
-
-        ArrayList<String> VetorInterativo = new ArrayList<>();
-
-        VetorInterativo.add("A");
-        VetorInterativo.add("B");
-        VetorInterativo.add("B");
-        VetorInterativo.add("B");
-        VetorInterativo.add("B");
-
         System.out.println("Verifcações interativas");
-        System.out.println("Repitções de A " + ContarRepetiçõesInterativas("A",VetorInterativo));
-        System.out.println("Repitções de B " + ContarRepetiçõesInterativas("B",VetorInterativo));
+        System.out.println("Repitções de A " + ContarRepetiçõesInterativas("A", Vetor));
+        System.out.println("Repitções de B " + ContarRepetiçõesInterativas("B", Vetor));
 
+    }
+
+    public static void ContarRepetiçõesRecursivas(String busca, ArrayList<String> vetor) {
+
+        // Verificando a posicao final para não cair em null pointer
+        if (posicao == vetor.size()) {
+            return;
+        }
+
+        // Comparando com a posição com a busca
+        String comparar = vetor.get(posicao);
+        if (comparar == busca) {
+            contador++;
+        }
+
+        // Incrementando posição para chamada recursiva verificar a posição seguinte
+        posicao++;
+        ContarRepetiçõesRecursivas(busca, vetor);
+
+        return;
+
+    }
+
+    public static Integer ContarRepetiçõesInterativas(String busca, ArrayList<String> V) {
+
+        Integer contadorInterativo = 0;
+
+        for (String v : V) {
+            if (busca == v) {
+                contadorInterativo++;
+            }
+        }
+        return contadorInterativo;
     }
 }
